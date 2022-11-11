@@ -872,9 +872,8 @@ testResult_t run() {
 #ifdef IREE_SUPPORT
   char *nprocs_str = getenv("IREE_SPMD_NPROCS");
   totalProcs = ncclProcs = nprocs_str ? atoi(nprocs_str) : 1;
-  char *proc_str = getenv("IREE_SPMD_PROC");
+  char *proc_str = getenv("IREE_SPMD_PROCID");
   proc = ncclProc = proc_str ? atoi(proc_str) : 0;
-  printf("# IREE NPROCS = %d, PROC = %d\n", ncclProcs, ncclProc);
 #endif
 
   is_main_thread = is_main_proc = (proc == 0) ? 1 : 0;
