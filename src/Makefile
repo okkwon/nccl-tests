@@ -66,6 +66,11 @@ ifeq ($(MPI), 1)
 NVCUFLAGS += -DMPI_SUPPORT -I$(MPI_HOME)/include
 NVLDFLAGS += -L$(MPI_HOME)/lib -L$(MPI_HOME)/lib64 -lmpi
 endif
+
+ifeq ($(IREE), 1)
+NVCUFLAGS += -DIREE_SUPPORT
+endif
+
 ifeq ($(MPI_IBM),1)
 NVCUFLAGS += -DMPI_SUPPORT
 NVLDFLAGS += -lmpi_ibm
