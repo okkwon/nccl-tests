@@ -924,14 +924,20 @@ testResult_t run() {
     maxBytes = memMaxBytes;
     if (proc == 0) printf("#\n# Reducing maxBytes to %ld due to memory limitation\n", maxBytes);
   }
-
   ncclUniqueId ncclId;
+#ifdef IREE_SUPPORT
+  if (ncclProc == 0) {
+    // Initiate the server role
+    NCCLCHECK(ncclInitRoot());
+  }
+  // Get the unique ID from NCCL_COMM_ID
+  NCCLCHECK(ncclGetUniqueIdFromEnv(&ncclId));
+#else
   if (ncclProc == 0) {
     NCCLCHECK(ncclGetUniqueId(&ncclId));
-  } else {
-    printf("calling ncclGetUniqueIdFromEnv()\n");
-    NCCLCHECK(ncclGetUniqueIdFromEnv(&ncclId));
   }
+#endif
+
 #ifdef MPI_SUPPORT
   MPI_Bcast(&ncclId, sizeof(ncclId), MPI_BYTE, 0, mpi_comm);
 #endif
