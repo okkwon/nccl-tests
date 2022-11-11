@@ -873,7 +873,7 @@ testResult_t run() {
   char *nprocs_str = getenv("IREE_SPMD_NPROCS");
   totalProcs = ncclProcs = nprocs_str ? atoi(nprocs_str) : 1;
   char *proc_str = getenv("IREE_SPMD_PROC");
-  proc = ncclProc = localRank = proc_str ? atoi(proc_str) : 0;
+  proc = ncclProc = proc_str ? atoi(proc_str) : 0;
   printf("# IREE NPROCS = %d, PROC = %d\n", ncclProcs, ncclProc);
 #endif
 
